@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Year Number Manipulator with Equations</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      margin-top: 20px;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 600px;
+      width: 100%;
+    }
+    textarea {
+      margin-top: 2px;
+      width: 100%;
+      height: 120px;
+      font-size: 21px;
+      resize: both;
+      overflow: auto;
+      box-sizing: border-box;
+    }
+    label {
+      margin-top: 10px;
+      margin-bottom: 5px;
+      align-self: flex-start;
+    }
+    select {
+      margin-bottom: 10px;
+      width: 100%;
+      font-size: 18px;
+    }
+    p {
+      margin: 5px 0 15px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <label for="select-1">Select year:</label>
+    <select id="select-1">
+      <option value="1622">1622</option>
+      <option value="1744">1744</option>
+      <option value="1766">1766</option>
+      <option value="1782">1782</option>
+      <option value="1802">1802</option>
+      <option value="1804">1804</option>
+      <option value="1822">1822</option>
+      <option value="1860">1860</option>
+      <option value="1861">1861</option>
+      <option value="1902">1902</option>
+      <option value="1921">1921</option>
+      <option value="1922">1922</option>
+      <option value="1966">1966</option>
+      <option value="2039">2039</option>
+      <option value="2054">2054</option>
+      <option value="2056">2056</option>
+      <option value="2058">2058</option>
+      <option value="2059">2059</option>
+      <option value="2060">2060</option>
+      <option value="2076">2076</option>
+      <option value="2078">2078</option>
+      <option value="2079">2079</option>
+      <option value="2080">2080</option>
+      <option value="2114">2114</option>
+      <option value="2139">2139</option>
+      <option value="2140">2140</option>
+      <option value="2154">2154</option>
+      <option value="2158">2158</option>
+      <option value="2159">2159</option>
+      <option value="2173">2173</option>
+      <option value="2174">2174</option>
+      <option value="2176">2176</option>
+      <option value="2180">2180</option>
+      <option value="2196">2196</option>
+      <option value="2218">2218</option>
+      <option value="2233">2233</option>
+      <option value="2234">2234</option>
+      <option value="2253">2253</option>
+      <option value="2254">2254</option>
+      <option value="2256">2256</option>
+      <option value="2258">2258</option>
+      <option value="2259">2259</option>
+      <option value="2279">2279</option>
+      <option value="2313">2313</option>
+      <option value="2333">2333</option>
+      <option value="2339">2339</option>
+      <option value="2354">2354</option>
+      <option value="2373">2373</option>
+      <option value="2413">2413</option>
+      <option value="2456">2456</option>
+    </select>
+
+    <textarea id="output-1"></textarea>
+
+    <label for="input">Enter text with year numbers:</label>
+    <textarea id="input"></textarea>
+
+  </div>
+
+  <script>
+    let input = document.getElementById("input");
+    let select1 = document.getElementById("select-1");
+    let output1 = document.getElementById("output-1");
+
+    function updateOutput() {
+      let inputText = input.value;
+      let x = parseInt(select1.value);
+
+      if (!isNaN(x)) {
+        let outputText = inputText.replace(/\b\d{4}\b/g, match => {
+          let yearNum = parseInt(match);
+          let result = yearNum - x;
+
+          if (result > 0) return `(${x} + ${result} years)`;
+          if (result < 0) return `(${x} - ${Math.abs(result)} years)`;
+          return `(${x})`;
+        });
+        output1.value = outputText;
+      } else {
+        output1.value = inputText;
+      }
+    }
+
+    input.addEventListener("input", updateOutput);
+    select1.addEventListener("change", updateOutput);
+  </script>
+</body>
+</html>
