@@ -115,6 +115,10 @@
       <option value="2456">2456</option>
       <option value="2553">2553</option>
     </select>
+    
+    <label>
+    <input type="checkbox" id="altMode"> Use alternate output
+    </label>
 
     <textarea id="output-1"></textarea>
 
@@ -124,31 +128,48 @@
   </div>
 
   <script>
-    let input = document.getElementById("input");
-    let select1 = document.getElementById("select-1");
-    let output1 = document.getElementById("output-1");
+  let input = document.getElementById("input");
+  let select1 = document.getElementById("select-1");
+  let output1 = document.getElementById("output-1");
+  let altMode = document.getElementById("altMode");
 
-    function updateOutput() {
-      let inputText = input.value;
-      let x = parseInt(select1.value);
+  function updateOutput() {
+    let inputText = input.value;
+    let x = parseInt(select1.value);
 
-      if (!isNaN(x)) {
-        let outputText = inputText.replace(/\b\d{4}\b/g, match => {
-          let yearNum = parseInt(match);
+    if (!isNaN(x)) {
+      let outputText = inputText.replace(/\b\d{4}\b/g, match => {
+        let yearNum = parseInt(match);
+
+        if (altMode.checked) {
+          let diff = Math.abs(yearNum - x);
+
+          if (yearNum < x) {
+            return `(${diff} years before ${x})`;
+          } else if (yearNum > x) {
+            return `(${diff} years after ${x})`;
+          } else {
+            return `(${x})`;
+          }
+        } else {
           let result = yearNum - x;
 
           if (result > 0) return `(${x} + ${result} years)`;
           if (result < 0) return `(${x} - ${Math.abs(result)} years)`;
           return `(${x})`;
-        });
-        output1.value = outputText;
-      } else {
-        output1.value = inputText;
-      }
-    }
+        }
+      });
 
-    input.addEventListener("input", updateOutput);
-    select1.addEventListener("change", updateOutput);
-  </script>
+      output1.value = outputText;
+    } else {
+      output1.value = inputText;
+    }
+  }
+
+  input.addEventListener("input", updateOutput);
+  select1.addEventListener("change", updateOutput);
+  altMode.addEventListener("change", updateOutput);
+</script>
 </body>
+
 </html>
