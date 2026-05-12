@@ -121,7 +121,7 @@
       <option value="2456">2456</option>
       <option value="2553">2553</option>
     </select>
-
+    
     <label>
       <input type="checkbox" id="altMode"> Use alternate output
     </label>
@@ -148,19 +148,15 @@
         return;
       }
 
-      const outputText = inputText.replace(/\b\d{4}\b/g, match => {
+      let outputText = inputText.replace(/\b\d{4}\b/g, match => {
         const yearNum = parseInt(match, 10);
 
         if (altMode.checked) {
           const diff = Math.abs(yearNum - x);
 
-          if (yearNum < x) {
-            return `x - ${diff}\n\nx = ${x}`;
-          } else if (yearNum > x) {
-            return `x + ${diff}\n\nx = ${x}`;
-          } else {
-            return `x = ${x}`;
-          }
+          if (yearNum < x) return `x - ${diff}`;
+          if (yearNum > x) return `x + ${diff}`;
+          return `x`;
         } else {
           const result = yearNum - x;
 
@@ -169,6 +165,10 @@
           return `(${x})`;
         }
       });
+
+      if (altMode.checked) {
+        outputText += `\n\nx = ${x}`;
+      }
 
       output1.value = outputText;
     }
