@@ -46,7 +46,7 @@
 
     <label for="select-1">Select year:</label>
     <select id="select-1">
-      <option>-select year number-</option>
+      <option value="">-select year number-</option>
       <option value="1622">1622</option>
       <option value="1744">1744</option>
       <option value="1766">1766</option>
@@ -121,12 +121,12 @@
       <option value="2456">2456</option>
       <option value="2553">2553</option>
     </select>
-    
+
     <label>
-    <input type="checkbox" id="altMode"> Use alternate output
+      <input type="checkbox" id="altMode"> Use alternate output
     </label>
 
-    <textarea id="output-1"></textarea>
+    <textarea id="output-1" readonly></textarea>
 
     <label for="input">Enter text with year numbers:</label>
     <textarea id="input"></textarea>
@@ -134,31 +134,35 @@
   </div>
 
   <script>
-  let input = document.getElementById("input");
-  let select1 = document.getElementById("select-1");
-  let output1 = document.getElementById("output-1");
-  let altMode = document.getElementById("altMode");
+    const input = document.getElementById("input");
+    const select1 = document.getElementById("select-1");
+    const output1 = document.getElementById("output-1");
+    const altMode = document.getElementById("altMode");
 
-  function updateOutput() {
-    let inputText = input.value;
-    let x = parseInt(select1.value);
+    function updateOutput() {
+      const inputText = input.value;
+      const x = parseInt(select1.value, 10);
 
-    if (!isNaN(x)) {
-      let outputText = inputText.replace(/\b\d{4}\b/g, match => {
-        let yearNum = parseInt(match);
+      if (isNaN(x)) {
+        output1.value = inputText;
+        return;
+      }
+
+      const outputText = inputText.replace(/\b\d{4}\b/g, match => {
+        const yearNum = parseInt(match, 10);
 
         if (altMode.checked) {
-          let diff = Math.abs(yearNum - x);
+          const diff = Math.abs(yearNum - x);
 
           if (yearNum < x) {
-            return `(${diff} years before ${x})`;
+            return `x - ${diff}\n\nx = ${x}`;
           } else if (yearNum > x) {
-            return `(${diff} years after ${x})`;
+            return `x + ${diff}\n\nx = ${x}`;
           } else {
-            return `(${x})`;
+            return `x = ${x}`;
           }
         } else {
-          let result = yearNum - x;
+          const result = yearNum - x;
 
           if (result > 0) return `(${x} + ${result} years)`;
           if (result < 0) return `(${x} - ${Math.abs(result)} years)`;
@@ -167,15 +171,11 @@
       });
 
       output1.value = outputText;
-    } else {
-      output1.value = inputText;
     }
-  }
 
-  input.addEventListener("input", updateOutput);
-  select1.addEventListener("change", updateOutput);
-  altMode.addEventListener("change", updateOutput);
-</script>
+    input.addEventListener("input", updateOutput);
+    select1.addEventListener("change", updateOutput);
+    altMode.addEventListener("change", updateOutput);
+  </script>
 </body>
-
 </html>
