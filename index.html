@@ -154,8 +154,8 @@
         if (altMode.checked) {
           const diff = Math.abs(yearNum - x);
 
-          if (yearNum < x) return `x - ${diff}`;
-          if (yearNum > x) return `x + ${diff}`;
+          if (yearNum < x) return `(x - ${diff})`;
+          if (yearNum > x) return `(x + ${diff})`;
           return `x`;
         } else {
           const result = yearNum - x;
