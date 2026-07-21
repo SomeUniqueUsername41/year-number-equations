@@ -137,7 +137,7 @@
     </select>
     
     <label>
-      <input type="checkbox" id="altMode" checked> Use century output
+      <input type="checkbox" id="altMode"> Use century output
     </label>
 
     <textarea id="output-1" readonly></textarea>
@@ -190,9 +190,9 @@
         } else {
           const result = yearNum - x;
 
-          if (result > 0) return `(${x} + ${result} years)`;
-          if (result < 0) return `(${x} - ${Math.abs(result)} years)`;
-          return `(${x})`;
+          if (result > 0) return `(x + ${result} years)`;
+          if (result < 0) return `(x - ${Math.abs(result)} years)`;
+          return `(x)`;
         }
       });
 
