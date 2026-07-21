@@ -137,7 +137,7 @@
     </select>
     
     <label>
-      <input type="checkbox" id="altMode"> Use alternate output
+      <input type="checkbox" id="altMode"> Use century output
     </label>
 
     <textarea id="output-1" readonly></textarea>
@@ -153,6 +153,26 @@
     const output1 = document.getElementById("output-1");
     const altMode = document.getElementById("altMode");
 
+    function ordinal(n) {
+      const s = ["th", "st", "nd", "rd"];
+      const v = n % 100;
+      return n + (s[(v - 20) % 10] || s[v] || s[0]);
+    }
+
+    function getCenturyLabel(yearNum, x) {
+      if (yearNum === x) return "x";
+
+      const diff = Math.abs(yearNum - x);
+      const centuryNum = Math.floor((diff - 1) / 100) + 1;
+      const centuryText = ordinal(centuryNum);
+
+      if (yearNum < x) {
+        return `(the ${centuryText} century before x)`;
+      } else {
+        return `(the ${centuryText} century of x)`;
+      }
+    }
+
     function updateOutput() {
       const inputText = input.value;
       const x = parseInt(select1.value, 10);
@@ -166,11 +186,7 @@
         const yearNum = parseInt(match, 10);
 
         if (altMode.checked) {
-          const diff = Math.abs(yearNum - x);
-
-          if (yearNum < x) return `(x - ${diff})`;
-          if (yearNum > x) return `(x + ${diff})`;
-          return `x`;
+          return getCenturyLabel(yearNum, x);
         } else {
           const result = yearNum - x;
 
