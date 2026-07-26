@@ -161,7 +161,7 @@
     }
 
     function getCenturyLabel(yearNum, x) {
-      if (yearNum === x) return `(x = ${x})`;
+      if (yearNum === x) return `(x)`;
 
       const diff = Math.abs(yearNum - x);
       const centuryNum = Math.floor((diff - 1) / 100) + 1;
@@ -186,6 +186,10 @@
       let outputText = inputText.replace(/\b\d{4}\b/g, match => {
         const yearNum = parseInt(match, 10);
 
+        if (yearNum === x) {
+          return `(x)`;
+        }
+
         if (altMode.checked) {
           return getCenturyLabel(yearNum, x);
         } else {
@@ -193,8 +197,9 @@
 
           if (result > 0) return `(x + ${result} years)`;
           if (result < 0) return `(x - ${Math.abs(result)} years)`;
-          return `(x = ${x})`;
         }
+
+        return `(x)`;
       });
 
       outputText += `\n\nx = ${x}`;
