@@ -164,7 +164,7 @@
       if (yearNum === x) return `(x)`;
 
       const diff = Math.abs(yearNum - x);
-      const centuryNum = Math.floor((diff - 1) / 100) + 1;
+      const centuryNum = Math.floor(diff / 100) + 1;
       const centuryText = ordinal(centuryNum);
 
       if (yearNum < x) {
